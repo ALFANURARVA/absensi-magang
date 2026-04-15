@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'siswa_id',
+        'role',
     ];
 
     /**
@@ -54,5 +55,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if user is admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

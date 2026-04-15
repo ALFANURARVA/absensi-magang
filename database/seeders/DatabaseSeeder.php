@@ -16,35 +16,47 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create siswa data FIRST
-        Siswa::create([
-            'nama' => 'Muhammad Ali',
-            'nis' => '001',
-            'jurusan' => 'Teknik Informatika',
-            'tempat_magang' => 'PT. Maju Jaya'
-        ]);
+        // Call AdminSeeder
+        $this->call(AdminSeeder::class);
 
-        Siswa::create([
-            'nama' => 'Siti Nurhaliza',
-            'nis' => '002',
-            'jurusan' => 'Sistem Informasi',
-            'tempat_magang' => 'PT. Digital Indonesia'
-        ]);
+        // Create siswa data FIRST if not exists
+        if (Siswa::count() === 0) {
+            Siswa::create([
+                'nama' => 'Muhammad Ali',
+                'nis' => '001',
+                'jurusan' => 'Teknik Informatika',
+                'tempat_magang' => 'PT. Maju Jaya'
+            ]);
 
-        Siswa::create([
-            'nama' => 'Ahmad Reza',
-            'nis' => '003',
-            'jurusan' => 'Teknik Komputer',
-            'tempat_magang' => 'CV. Digital Maju'
-        ]);
+            Siswa::create([
+                'nama' => 'Siti Nurhaliza',
+                'nis' => '002',
+                'jurusan' => 'Sistem Informasi',
+                'tempat_magang' => 'PT. Digital Indonesia'
+            ]);
 
-        // Create test user AFTER siswa
-        User::create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-            'siswa_id' => 1
-        ]);
+            Siswa::create([
+                'nama' => 'Ahmad Reza',
+                'nis' => '003',
+                'jurusan' => 'Teknik Komputer',
+                'tempat_magang' => 'CV. Digital Maju'
+            ]);
+
+            $this->command->info('Siswa data created successfully!');
+        }
+
+        // Create test user AFTER siswa if not exists
+        if (!User::where('email', 'test@example.com')->exists()) {
+            User::create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'password' => bcrypt('password'),
+                'siswa_id' => 1,
+                'role' => 'siswa'
+            ]);
+
+            $this->command->info('Test user created successfully!');
+        }
     }
 }
 

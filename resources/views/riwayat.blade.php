@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.user')
+
+@section('breadcrumb', 'Riwayat Absensi')
 
 @section('content')
 

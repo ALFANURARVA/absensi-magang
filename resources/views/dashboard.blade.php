@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.user')
+
+@section('breadcrumb', 'Dashboard')
 
 @section('content')
 
@@ -96,6 +98,43 @@
     @endif
 
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+            --text: #374151;
+            --text-muted: #6b7280;
+        }
+
+        /* PAGE HEADER */
+        .header-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .greeting-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .greeting-text i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .time-date {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
         /* QUICK ACTIONS */
         .quick-actions {
             display: grid;
@@ -105,21 +144,22 @@
         }
 
         .quick-action-btn {
-            background: linear-gradient(135deg, #f5f7fa, #e9ecef);
-            border: 2px solid #e8eef5;
-            border-radius: 16px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
             padding: 20px;
             text-align: center;
             text-decoration: none;
-            color: #667eea;
+            color: var(--primary);
             font-weight: 600;
             font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .quick-action-btn i {
@@ -128,44 +168,41 @@
 
         .quick-action-btn:hover {
             transform: translateY(-6px);
-            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
-            border-color: #667eea;
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
         }
 
         .quick-action-btn.masuk {
-            border-color: #667eea;
-            color: #667eea;
-        }
-
-        .quick-action-btn.masuk:hover {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .quick-action-btn.pulang {
-            border-color: #f5576c;
-            color: #f5576c;
+            border-color: var(--danger);
+            color: var(--danger);
         }
 
         .quick-action-btn.pulang:hover {
-            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1));
+            box-shadow: 0 12px 24px rgba(239, 68, 68, 0.15);
         }
 
         .quick-action-btn.laporan {
-            border-color: #4facfe;
-            color: #4facfe;
+            border-color: var(--warning);
+            color: var(--warning);
         }
 
         .quick-action-btn.laporan:hover {
-            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+            box-shadow: 0 12px 24px rgba(245, 158, 11, 0.15);
         }
 
         .quick-action-btn.profil {
-            border-color: #43e97b;
-            color: #43e97b;
+            border-color: var(--success);
+            color: var(--success);
         }
 
         .quick-action-btn.profil:hover {
-            background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), rgba(56, 249, 215, 0.1));
+            box-shadow: 0 12px 24px rgba(16, 185, 129, 0.15);
         }
 
         /* STATISTICS CARDS */
@@ -177,19 +214,19 @@
         }
 
         .stat-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
             padding: 30px 20px;
             color: white;
             text-align: center;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
             border: none;
         }
 
         .stat-box:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.35);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.35);
         }
 
         .stat-number {
@@ -207,15 +244,15 @@
         /* CHART CARD */
         .chart-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.08);
-            border: 1px solid #e8eef5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
             margin-top: 20px;
         }
 
         .chart-title {
-            color: #2d3748;
+            color: var(--text);
             font-weight: 700;
             margin-bottom: 25px;
             font-size: 1.3rem;
@@ -225,37 +262,35 @@
         }
 
         .chart-title i {
-            color: #667eea;
+            color: var(--primary);
         }
 
         /* ALERTS */
         .alert {
             border-radius: 12px;
             margin-bottom: 20px;
-            border: 1px solid;
+            border: none;
             animation: slideDown 0.3s ease-out;
         }
 
         .alert-success {
-            background: linear-gradient(135deg, #43e97b, #38f9d7);
-            color: white;
-            border-color: #38f9d7;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
         }
 
         .alert-danger {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            color: white;
-            border-color: #f5576c;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
         }
 
         /* EMPTY STATE */
         .empty-state-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
-            border: 2px dashed #e8eef5;
-            border-radius: 16px;
+            background: white;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
             padding: 60px 30px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             margin-top: 20px;
         }
 
@@ -269,30 +304,30 @@
         .empty-state-card h4 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2d3748;
+            color: var(--text);
             margin-bottom: 10px;
         }
 
         .empty-state-card p {
-            color: #718096;
+            color: var(--text-muted);
             font-size: 1rem;
             margin-bottom: 30px;
         }
 
         .tips-section {
-            background: white;
-            border-left: 4px solid #667eea;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border-left: 4px solid var(--primary);
             border-radius: 12px;
             padding: 25px;
             text-align: left;
             max-width: 500px;
             margin: 0 auto;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
         }
 
         .tips-section p {
             font-weight: 600;
-            color: #2d3748;
+            color: var(--text);
             margin-bottom: 15px;
         }
 
@@ -304,7 +339,7 @@
 
         .tips-section li {
             padding: 10px 0;
-            color: #718096;
+            color: var(--text-muted);
             display: flex;
             align-items: center;
             font-size: 0.95rem;
@@ -312,7 +347,7 @@
 
         .tips-section li:before {
             content: "→";
-            color: #667eea;
+            color: var(--primary);
             font-weight: bold;
             margin-right: 12px;
             font-size: 1.1rem;

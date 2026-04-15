@@ -14,13 +14,15 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 require __DIR__.'/../vendor/autoload.php';
 
 // Bootstrap Laravel and handle the request...
-/** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$response = $app->handle(
+$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
     $request = Request::capture()
 );
 
 $response->send();
 
-$app->terminate($request, $response);
+$kernel->terminate($request, $response);
+

@@ -17,4 +17,12 @@ class Absensi extends Model
         'foto_absen',
         'lokasi'
     ];
+
+    /**
+     * Get the siswa associated with this absensi.
+     */
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class);
+    }
 }

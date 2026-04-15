@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
-class LoginController extends Controller
+class AdminLoginController extends Controller
 {
     public function showLoginForm()
     {
@@ -26,8 +25,17 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'))->with('success', 'Berhasil masuk!');
+            // Cek apakah user adalah admin
+            if (Auth::user()->isAdmin()) {
+                $request->session()->regenerate();
+                return redirect()->intended(route('admin.dashboard'))->with('success', 'Berhasil masuk sebagai admin!');
+            }
+
+            // Jika bukan admin, logout
+            Auth::logout();
+            return back()->withErrors([
+                'email' => 'Anda tidak memiliki akses admin.',
+            ])->onlyInput('email');
         }
 
         return back()->withErrors([
@@ -41,6 +49,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
-        return redirect('/')->with('success', 'Berhasil keluar dari akun.');
+        return redirect('/admin/login')->with('success', 'Berhasil keluar dari akun admin.');
     }
 }

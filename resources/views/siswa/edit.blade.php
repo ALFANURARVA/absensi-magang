@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.user')
+
+@section('breadcrumb', 'Edit Profil')
 
 @section('content')
 
