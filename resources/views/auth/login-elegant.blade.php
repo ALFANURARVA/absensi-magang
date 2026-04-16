@@ -310,16 +310,6 @@
                 <p class="login-subtitle">Sistem Absensi Siswa Magang</p>
             </div>
 
-            <!-- ROLE SELECTOR -->
-            <div class="role-selector">
-                <button type="button" class="role-btn active" data-role="siswa" onclick="setRole('siswa')">
-                    <i class="fas fa-user-graduate"></i> Siswa
-                </button>
-                <button type="button" class="role-btn" data-role="admin" onclick="setRole('admin')">
-                    <i class="fas fa-shield-alt"></i> Admin
-                </button>
-            </div>
-
             <!-- ALERT ERRORS -->
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -358,19 +348,6 @@
                 </button>
             </form>
 
-            <!-- DIVIDER -->
-            <div class="divider">atau</div>
-
-            <!-- QUICK ACCESS -->
-            <div class="other-login">
-                <button type="button" class="btn-other" onclick="quickLogin('admin@absensi.com', 'admin12345', 'admin')">
-                    <i class="fas fa-bolt"></i> Demo Admin
-                </button>
-                <button type="button" class="btn-other" onclick="quickLogin('test@example.com', 'password', 'siswa')">
-                    <i class="fas fa-bolt"></i> Demo Siswa
-                </button>
-            </div>
-
             <!-- FOOTER -->
             <div class="login-footer">
                 Belum terdaftar? <a href="{{ route('register') }}">Daftar sekarang</a>
@@ -379,39 +356,8 @@
     </div>
 
     <script>
-        let selectedRole = 'siswa';
-
-        function setRole(role) {
-            selectedRole = role;
-            
-            // Update button styles
-            document.querySelectorAll('.role-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[data-role="${role}"]`).classList.add('active');
-            
-            // Update form action
-            const form = document.getElementById('loginForm');
-            if (role === 'admin') {
-                form.action = '{{ route('admin.login.submit') }}';
-            } else {
-                form.action = '{{ route('login') }}';
-            }
-        }
-
-        function quickLogin(email, password, role) {
-            document.querySelector('input[name="email"]').value = email;
-            document.querySelector('input[name="password"]').value = password;
-            setRole(role);
-            document.getElementById('loginForm').submit();
-        }
-
         // Set initial form action
         document.getElementById('loginForm').action = '{{ route('login') }}';
-
-        @if (request()->is('admin/*'))
-            setRole('admin');
-        @endif
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
